@@ -22,6 +22,13 @@ test('User cannot register with mismatched passwords', async ({ page }) => {
     await expect(page.getByText('As senhas não conferem.')).toBeVisible();
 });
 
+test('User cannot register with invalid email', async ({ page }) => {
+
+    const registerPage = new RegisterPage(page);
+    await registerPage.register('user4', 'user4gmail.com','000000003', 'S/N', '12345678', '12345678');
+    await expect(page).toHaveURL(/.registrar/);
+});
+
 test('User cannot register with empty fields', async ({ page }) => {
 
     const registerPage = new RegisterPage(page);
