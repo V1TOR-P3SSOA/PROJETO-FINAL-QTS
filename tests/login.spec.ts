@@ -15,3 +15,10 @@ test('User cannot login with invalid credentials', async ({ page }) => {
     await loginpage.login('antonio@gmail.com', 'wrongpassword');
     await expect(page.getByText('E-mail ou senha incorretos.')).toBeVisible();
   });
+
+test('User cannot login with empty fields', async ({ page }) => {
+
+    const loginpage = new LoginPage(page); 
+    await loginpage.login('', '');
+    await expect(page).toHaveURL(/.login/);
+  });
