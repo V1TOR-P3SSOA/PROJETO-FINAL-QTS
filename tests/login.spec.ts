@@ -8,3 +8,10 @@ test('User can login', async ({ page }) => {
     await expect(page).toHaveURL(/.TelaInicial/);
   
   });
+
+test('User cannot login with invalid credentials', async ({ page }) => {
+
+    const loginpage = new LoginPage(page); 
+    await loginpage.login('antonio@gmail.com', 'wrongpassword');
+    await expect(page.getByText('E-mail ou senha incorretos.')).toBeVisible();
+  });
