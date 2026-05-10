@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { RegisterPage } from '../pages/register-page'; 
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const email = process.env.EXISTING_USER_EMAIL!;
 
 test('User can register', async ({ page }) => {
 
@@ -11,7 +16,7 @@ test('User can register', async ({ page }) => {
 test('User cannot register with existing email', async ({ page }) => {
 
     const registerPage = new RegisterPage(page);
-    await registerPage.register('user2', 'antonio@gmail.com','000000001', 'S/N', '12345678', '12345678');
+    await registerPage.register('user2', email,'000000001', 'S/N', '12345678', '12345678');
     await expect(page.getByText('Este e-mail já está cadastrado.')).toBeVisible();
 });
 
