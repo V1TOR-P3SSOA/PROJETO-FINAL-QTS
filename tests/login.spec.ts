@@ -1,10 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login-page';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const email = process.env.USER_EMAIL!;
+const password = process.env.USER_PASSWORD!;
 
 test('User can login', async ({ page }) => {
 
     const loginpage = new LoginPage(page); 
-    await loginpage.login('antonio@gmail.com', '12345678');
+    await loginpage.login(email, password);
     await expect(page).toHaveURL(/.TelaInicial/);
   
   });
@@ -12,7 +18,7 @@ test('User can login', async ({ page }) => {
 test('User cannot login with invalid credentials', async ({ page }) => {
 
     const loginpage = new LoginPage(page); 
-    await loginpage.login('antonio@gmail.com', 'wrongpassword');
+    await loginpage.login('email', 'wrongpassword');
     await expect(page.getByText('E-mail ou senha incorretos.')).toBeVisible();
   });
 
