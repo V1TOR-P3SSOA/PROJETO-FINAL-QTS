@@ -14,3 +14,10 @@ test('User cannot register with existing email', async ({ page }) => {
     await registerPage.register('user2', 'antonio@gmail.com','000000001', 'S/N', '12345678', '12345678');
     await expect(page.getByText('Este e-mail já está cadastrado.')).toBeVisible();
 });
+
+test('User cannot register with empty fields', async ({ page }) => {
+
+    const registerPage = new RegisterPage(page);
+    await registerPage.register('', '','', '', '', '');
+    await expect(page).toHaveURL(/.registrar/);
+});
