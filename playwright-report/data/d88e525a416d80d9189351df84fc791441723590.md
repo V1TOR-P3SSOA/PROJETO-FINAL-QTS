@@ -92,10 +92,17 @@ Call log:
   15 |     await expect(page.getByText('Este e-mail já está cadastrado.')).toBeVisible();
   16 | });
   17 | 
-  18 | test('User cannot register with empty fields', async ({ page }) => {
+  18 | test('User cannot register with mismatched passwords', async ({ page }) => {
   19 | 
   20 |     const registerPage = new RegisterPage(page);
-  21 |     await registerPage.register('', '','', '', '', '');
-  22 |     await expect(page).toHaveURL(/.registrar/);
+  21 |     await registerPage.register('user3', 'user3@gmail.com','000000002', 'S/N', '12345678', '87654321');
+  22 |     await expect(page.getByText('As senhas não conferem.')).toBeVisible();
   23 | });
+  24 | 
+  25 | test('User cannot register with empty fields', async ({ page }) => {
+  26 | 
+  27 |     const registerPage = new RegisterPage(page);
+  28 |     await registerPage.register('', '','', '', '', '');
+  29 |     await expect(page).toHaveURL(/.registrar/);
+  30 | });
 ```
